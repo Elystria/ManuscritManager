@@ -1,0 +1,35 @@
+
+= Commentaires sur le manuel utilisateur
+
+* C'est normalement un manuel utilisateur, il devrait être rédigé au présent :
+  "Le Manuscrit Manager **est** une application puissante..."
+
+* Dans les fonctionnalités de votre application, il faudrait prévoir de
+  manipuler votre application par API (par programmation), sans passer par une
+  interface utilisateur.  L'interface utilisateur sera bien sûr à faire aussi.
+  Ceci permet de garantir que les classes métier restent indépendante de
+  l'IHM.
+
+* 2.3 et 2.5.2. sont liés. 2.5.2 est une utilisation possible de 2.3 ?
+
+* début de 2.2.1 : ce n'est pas forcément très motivant d'indiquer le
+  retard...
+
+* Vous avez donné une idée de l'interface utlisateur en utilisant celle de
+  matlab pour insister sur l'agencement possible des différentes vues.
+  Ce qui est aussi demandé, c'est de décrire les vues, les écrans
+  correspondant aux fonctionnalités de votre application.  Ceci aura aussi
+  pour intérêt de vous faire réfléchir aux données à manipuler.
+  Vous avez donné une description textuelle, mais un schéma peut aider à
+  préciser les choses.
+
+
+= Remarques générales
+
+Vous avez identifié de nombreuses fonctionnalités.  Elles sont toutes de haut
+niveau.  Quelle priorité mettez vous sur ces fonctionnalités ?
+
+Pour celles que vous jugez plus prioritaires, il faudrait les préciser et les
+décomposer de manière à voir comment les traiter sur plusieurs itérations en
+ayant à la fin de chaque itération de la valeur à montrer (des fonctionnalités
+implantées).

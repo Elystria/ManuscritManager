@@ -1,0 +1,184 @@
+%%%%% Identification Part %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styleN7_utf8}[2016/12/07 macros pour la rédaction de rapports]
+
+
+%%%% Package loading %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[T1]{fontenc}
+\usepackage{fourier}
+\newcommand{\warn}[1]{\textcolor{red}{\textbf{\danger~Attention~:}} #1}
+\RequirePackage{lmodern}
+\RequirePackage{fancyhdr}
+\RequirePackage{graphics}
+\RequirePackage{graphicx}
+\RequirePackage{xspace}
+\RequirePackage{moreverb}
+\RequirePackage{float}
+\RequirePackage[hidelinks]{hyperref}
+%\RequirePackage{url}
+\RequirePackage[french]{babel}
+\RequirePackage{listings}
+\RequirePackage{ucs}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{array}
+\RequirePackage[dvipsnames,svgnames]{xcolor}
+\RequirePackage[
+  top=3.5cm,
+  right=2.5cm,
+  left=2.5cm,
+  bottom=3.25cm,
+  headheight=26pt]{geometry}
+
+  % Mise en page des chapitres
+\RequirePackage{titlesec}
+  % Annexes
+\RequirePackage[titletoc,title]{appendix}
+  % Prendre des TODO dans le rapport
+\RequirePackage{todonotes}
+\newcommand{\inlinetodo}[1]{\todo[inline]{#1}}
+  % Générer du lorem ipsum
+\RequirePackage{lipsum}
+
+
+%%%% Modification de la mise page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ajout de commandes utiles à la mise en page
+\newcommand{\shorttitle}{}
+\newcommand{\subject}{}
+\newcommand{\discipline}{}
+\newcommand{\promotion}{}
+\newcommand{\imgPageGarde}{}
+
+\renewcommand{\shorttitle}[1]{\renewcommand{\shorttitle}{{#1}}}
+\renewcommand{\subject}[1]{\renewcommand{\subject}{{#1}}}
+\renewcommand{\discipline}[1]{\renewcommand{\discipline}{{#1}}}
+\renewcommand{\promotion}[1]{\renewcommand{\promotion}{{#1}}}
+\renewcommand{\imgPageGarde}[1]{\renewcommand{\imgPageGarde}{#1}}
+
+
+%% Page de titre
+\renewcommand{\maketitle}{%
+  \par\begin{center}
+    \vspace*{0em}
+    \scalebox{0.75}{\includegraphics{inp-enseeiht.png}}\vspace*{1em}\par
+    \LARGE{\bf{\thedoctitle}}\par
+    \Large{\bf{\subject}}\vspace*{1em}\par
+    \Large{\@author}\vspace*{1em}\par
+  \end{center}
+  
+  \tableofcontents
+
+  %% Mise en page
+  \thispagestyle{pagegarde}
+}
+
+
+%% A placer en début de document, après définition des valeurs
+%% des commandes précédentes
+\AtBeginDocument{%
+
+  %% Création des commandes utiles 
+  \makeatletter
+  \let\thedoctitle\@title
+  \let\theauthor\@author
+  \let\thedate\@date
+  \makeatother
+
+  %% Mise en page de titre
+  \fancypagestyle{pagegarde}{%
+    %% En-tête
+    \fancyhead[L]{\scriptsize \emph{\promotion}\\\textsc{\small\discipline}}
+    \fancyhead[C]{}
+    \fancyhead[R]{\scriptsize \thedate\\\subject}
+    \renewcommand{\headrulewidth}{0pt}
+
+    %% Pied de page
+    \fancyfoot[L]{}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[R]{}
+  }
+
+  %% Mise en page normale
+  \fancypagestyle{plain}{%
+    %% En-tête
+    \fancyhead[LE]{\emph{\promotion}\\\textsc{\small\discipline}}
+    \fancyhead[RE]{\thedate\vspace*{0.2em}}
+    \fancyhead[C]{}
+    \fancyhead[LO]{\subject}
+    \fancyhead[RO]{\textsc{\small\thedoctitle}}
+    \renewcommand{\headrulewidth}{0.1pt}
+
+    %% Pied de page
+    \fancyfoot[LE]{}
+    \fancyfoot[RE]{}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[LO]{}
+    \fancyfoot[RO]{}
+    \renewcommand{\footrulewidth}{0.1pt}
+
+  }
+
+  %% Mise en page des chapitres
+  \titleformat{\chapter} % command
+	      [hang] % shape
+	      {\normalfont\huge\bfseries\raggedright} % format
+	      {Chapitre \thechapter~:} % label
+	      {0.5em} % sep
+	      {} % before-code
+	      [] % after-code
+  \titlespacing*{\chapter}{0pt}{0pt}{1.5em}
+
+  %% Validation de la mise en page
+  \pagestyle{plain}
+}
+
+%%% Mise en page du code verbatim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{fancyvrb}
+
+%%% Pour afficher des algorithmes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[french]{algorithm2e}
+\newenvironment{algoo}{%
+    \hrule
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetKwSwitch{Suivant}{Cas}{Autre}{suivant}{faire}{cas où}{autres cas}{fincas}{}{}
+    \SetKwInput{Donnes}{Données}
+    \SetKwInput{Res}{Résultat}
+    \SetKwInput{Entree}{Entrées}
+    \SetKwInput{Sortie}{Sorties}
+    \SetKwBlock{Vars}{Variables locales~:}{}
+    \SetKwBlock{Var}{Variable locale~:}{}
+    \SetKw{KwA}{à }
+    \SetKw{new}{nouveau }
+    \SetKw{raise}{lever }
+    \SetKw{Retour}{retourner}
+    \SetKwBlock{Deb}{Début}{Fin}
+    \SetKwBlock{Debs}{}{}
+    \SetKwBlock{Debu}{début}{}
+    \SetKwBlock{Except}{Exception}{}
+    \SetKw{Fin}{fin}
+    \SetKwIF{Si}{SinonSi}{Sinon}{si}{alors}{sinon si}{sinon}{finsi}
+    \SetKwFor{Tq}{tant que}{faire}{fintantque}
+    \SetKwFor{Pour}{pour}{faire}{finpour}
+    \SetKwRepeat{Repeter}{Répéter}{jusqu'à }
+}{%
+    \end{algorithm}
+    \hrule
+    \vspace{1em}
+}
+
+
+%%%% Commandes utiles %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nullp}{\texttt{null}}
+\newcommand{\fun}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\var}[1]{\texttt{#1}}
+\newcommand{\type}[1]{\texttt{#1}}
+\newcommand{\const}[1]{\texttt{#1}}
+\newcommand{\cst}[1]{\texttt{#1}}
+\newcommand{\pack}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\lstinline[basicstyle=\tt]{#1}}
+\newcommand{\true}{\var{true}}
+\newcommand{\false}{\var{false}}
+
